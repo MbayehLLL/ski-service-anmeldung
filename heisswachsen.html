@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heisswachsen | Jetstream Ski-Service</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <a href="index.html" class="top-left-button">Home</a>
+
+    <header>
+        <h1>Heisswachsen</h1>
+    </header>
+
+    <section class="angebot-detail">
+        <div class="angebot-photo">
+            <img src="assets\Images\Photo6-516413721-612x612.jpg" alt="Heisswachsen">
+        </div>
+        <div class="angebot-description">
+            <h2>Details</h2>
+            <p>Optimale Gleitfähigkeit auf jeder Piste. Perfektes Finish für ein unvergleichliches Fahrerlebnis.</p>
+            <ul>
+                <li>Hochwertiges Heißwachs für maximale Gleitfähigkeit</li>
+                <li>Spezialwachse je nach Wetterbedingungen</li>
+                <li>Perfektes Finish für Ihre Ski</li>
+            </ul>
+            <p><strong>Basispreis:</strong> <span id="base-price">30</span>€</p>
+        </div>
+    </section>
+
+    <section class="booking-info">
+        <h2>Service-Optionen</h2>
+        <p><strong>Standarddauer:</strong> 2 Tage</p>
+        <p><strong>Prioritäten:</strong></p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Priorität</th>
+                    <th>Zusätzliche Tage</th>
+                    <th>Gesamtdauer</th>
+                    <th>Preis</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Tief</td>
+                    <td>+5 Tage</td>
+                    <td>7 Tage</td>
+                    <td id="price-tief">30€</td>
+                </tr>
+                <tr>
+                    <td>Standard</td>
+                    <td>+0 Tage</td>
+                    <td>2 Tage</td>
+                    <td id="price-standard"></td>
+                </tr>
+                <tr>
+                    <td>Express</td>
+                    <td>-2 Tage</td>
+                    <td>1 Tag</td>
+                    <td id="price-express"></td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Startdatum: Das aktuelle Datum der Anmeldung wird automatisch festgelegt.</p>
+        <a href="anmeldung.html" class="btn">Jetzt Buchen</a>
+    </section>
+    
+    <section class="contact-section">
+        <h2>Kontakt Information</h2>
+        <p>Wir sind hier, um Ihre Fragen zu beantworten und Ihre Aufträge entgegenzunehmen.</p>
+        <a href="kontakt.html" class="btn">Zur Kontaktseite</a>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Jetstream Ski-Service. Alle Rechte vorbehalten.</p>
+    </footer>
+    
+    <script>
+        // Dynamic Pricing Script
+        const basePrice = 30; // Base price in euros
+        document.getElementById('price-tief').innerText = `${basePrice}€`;
+        document.getElementById('price-standard').innerText = `${(basePrice * 1.1).toFixed(2)}€`;
+        document.getElementById('price-express').innerText = `${(basePrice * 1.25).toFixed(2)}€`;
+    </script>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Anmeldung | Jetstream Ski-Service</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <a href="index.html" class="top-left-button">Home</a>
+
+    <header>
+        <h1>Service Anmeldung</h1>
+        <p>Planen Sie Ihren perfekten Skiservice. Füllen Sie das Formular aus und erhalten Sie eine Quittung mit allen Details.</p>
+    </header>
+
+    <section class="registration-form">
+        <form id="serviceForm">
+            <h2>Persönliche Daten</h2>
+            <div class="form-group">
+                <label for="name">Kundenname <span class="required">*</span></label>
+                <input type="text" id="name" name="name" placeholder="Ihr vollständiger Name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">E-Mail <span class="required">*</span></label>
+                <input type="email" id="email" name="email" placeholder="Ihre E-Mail-Adresse" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Telefon <span class="required">*</span></label>
+                <input type="tel" id="phone" name="phone" placeholder="Ihre Telefonnummer" pattern="[0-9]+" required>
+            </div>
+
+            <h2>Service Details</h2>
+            <div class="form-group">
+                <label for="service">Dienstleistung <span class="required">*</span></label>
+                <select id="service" name="service" required>
+                    <option value="kleiner-service" data-price="50">Kleiner Service (50€)</option>
+                    <option value="grosser-service" data-price="90">Grosser Service (90€)</option>
+                    <option value="rennski-service" data-price="120">Rennski-Service (120€)</option>
+                    <option value="bindung-montieren" data-price="70">Bindung montieren (70€)</option>
+                    <option value="fell-zuschneiden" data-price="40">Fell zuschneiden (40€)</option>
+                    <option value="heisswachsen" data-price="30">Heisswachsen (30€)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="priority">Priorität <span class="required">*</span></label>
+                <select id="priority" name="priority" required>
+                    <option value="tief" data-multiplier="1">Tief (+5 Tage)</option>
+                    <option value="standard" data-multiplier="1.1" selected>Standard (+0 Tage)</option>
+                    <option value="express" data-multiplier="1.25">Express (-2 Tage)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="completion-date">Abholdatum</label>
+                <input type="text" id="completion-date" name="completion-date" readonly>
+            </div>
+
+            <div class="form-group">
+                <label for="calculated-price">Berechneter Preis</label>
+                <input type="text" id="calculated-price" name="calculated-price" readonly>
+            </div>
+
+            <button type="submit" class="btn">Anmelden</button>
+        </form>
+    </section>
+
+    <section class="receipt-section" id="receiptSection" style="display: none;">
+        <h2>Ihre Quittung</h2>
+        <p><strong>Kundenname:</strong> <span id="receiptName"></span></p>
+        <p><strong>E-Mail:</strong> <span id="receiptEmail"></span></p>
+        <p><strong>Telefon:</strong> <span id="receiptPhone"></span></p>
+        <p><strong>Dienstleistung:</strong> <span id="receiptService"></span></p>
+        <p><strong>Priorität:</strong> <span id="receiptPriority"></span></p>
+        <p><strong>Abholdatum:</strong> <span id="receiptCompletionDate"></span></p>
+        <p><strong>Preis:</strong> <span id="receiptPrice"></span></p>
+        <button onclick="window.print()" class="btn">Quittung Drucken</button>
+    </section>
+
+    <section class="contact-section">
+        <h2>Kontakt Information</h2>
+        <p>Wir sind hier, um Ihre Fragen zu beantworten und Ihre Aufträge entgegenzunehmen.</p>
+        <a href="kontakt.html" class="btn">Zur Kontaktseite</a>
+    </section>
+    
+    <footer>
+        <p>&copy; 2024 Jetstream Ski-Service. Alle Rechte vorbehalten.</p>
+    </footer>
+
+    <script>
+        const form = document.getElementById('serviceForm');
+        const serviceDropdown = document.getElementById('service');
+        const priorityDropdown = document.getElementById('priority');
+        const calculatedPriceInput = document.getElementById('calculated-price');
+        const completionDateInput = document.getElementById('completion-date');
+
+        function updatePriceAndDate() {
+            const selectedService = serviceDropdown.options[serviceDropdown.selectedIndex];
+            const selectedPriority = priorityDropdown.options[priorityDropdown.selectedIndex];
+
+            const basePrice = parseFloat(selectedService.dataset.price);
+            const multiplier = parseFloat(selectedPriority.dataset.multiplier);
+
+            const calculatedPrice = basePrice * multiplier;
+            calculatedPriceInput.value = `${calculatedPrice.toFixed(2)}€`;
+
+            const baseDays = {
+                'kleiner-service': 5,
+                'grosser-service': 7,
+                'rennski-service': 9,
+                'bindung-montieren': 3,
+                'fell-zuschneiden': 4,
+                'heisswachsen': 2,
+            };
+
+            const additionalDays = {
+                'tief': 5,
+                'standard': 0,
+                'express': -2,
+            };
+
+            const today = new Date();
+            const completionDate = new Date(today);
+            completionDate.setDate(today.getDate() + baseDays[selectedService.value] + additionalDays[selectedPriority.value]);
+            completionDateInput.value = completionDate.toISOString().split('T')[0];
+        }
+
+        serviceDropdown.addEventListener('change', updatePriceAndDate);
+        priorityDropdown.addEventListener('change', updatePriceAndDate);
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                service: serviceDropdown.value,
+                priority: priorityDropdown.value,
+                completion_date: completionDateInput.value, 
+                calculated_price: parseFloat(calculatedPriceInput.value.replace('€', '')), 
+            };
+
+            // Prepare receipt data
+            document.getElementById('receiptName').textContent = formData.name;
+            document.getElementById('receiptEmail').textContent = formData.email;
+            document.getElementById('receiptPhone').textContent = formData.phone;
+            document.getElementById('receiptService').textContent = serviceDropdown.options[serviceDropdown.selectedIndex].text;
+            document.getElementById('receiptPriority').textContent = priorityDropdown.options[priorityDropdown.selectedIndex].text;
+            document.getElementById('receiptCompletionDate').textContent = formData.completion_date;
+            document.getElementById('receiptPrice').textContent = `${formData.calculated_price}€`;
+
+            document.getElementById('receiptSection').style.display = 'block';
+
+            try {
+                const response = await fetch('http://localhost:5000/api/registration', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
+
+                if (response.ok) {
+                    alert('Ihre Anmeldung wurde erfolgreich übermittelt!');
+                } else {
+                    alert('Fehler beim Übermitteln der Anmeldung!');
+                }
+            } catch (error) {
+                alert('Es ist ein Fehler aufgetreten: ' + error.message);
+            }
+        });
+
+        updatePriceAndDate();
+    </script>
+
+
+</body>
+</html>

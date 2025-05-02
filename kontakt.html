@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontakt | Jetstream Ski-Service</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <a href="index.html" class="top-left-button">Home</a>
+
+    <header>
+        <h1>Kontakt</h1>
+        <p>Wir freuen uns auf Ihre Nachricht oder Ihren Besuch. Lassen Sie uns wissen, wie wir Ihnen helfen können.</p>
+    </header>
+
+    <section class="contact-details">
+        <div class="contact-card">
+            <h2>Unsere Adresse</h2>
+            <p>Jetstream Ski-Service</p>
+            <p>Hauptstraße 123</p>
+            <p>12345 Winterstadt</p>
+        </div>
+
+        <div class="contact-card">
+            <h2>Telefon</h2>
+            <p>+49 123 4567890</p>
+        </div>
+
+        <div class="contact-card">
+            <h2>E-Mail</h2>
+            <p><a href="mailto:info@jetstream-ski-service.de">info@jetstream-ski-service.de</a></p>
+        </div>
+
+        <div class="contact-card">
+            <h2>Öffnungszeiten</h2>
+            <p>Montag - Freitag: 09:00 - 18:00 Uhr</p>
+            <p>Samstag: 10:00 - 16:00 Uhr</p>
+            <p>Sonntag: Geschlossen</p>
+        </div>
+    </section>
+
+    <section class="cta">
+        <h2>Buchen Sie jetzt Ihren Skiservice!</h2>
+        <a href="anmeldung.html" class="btn">Jetzt Service buchen</a>
+    </section>
+    
+    <footer>
+        <p>&copy; 2024 Jetstream Ski-Service. Alle Rechte vorbehalten.</p>
+    </footer>
+
+    <script>
+        // Form submission handler
+        const contactForm = document.getElementById('contactForm');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Vielen Dank für Ihre Nachricht! Wir melden uns schnellstmöglich bei Ihnen.');
+            contactForm.reset();
+        });
+    </script>
+</body>
+</html>
